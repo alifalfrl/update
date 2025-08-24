@@ -429,6 +429,11 @@
             <input type="text" id="newKeyName" class="input-field" placeholder="Contoh: Key untuk Budi">
           </div>
 
+          <div class="input-group">
+            <label for="keyIp">IP Address (opsional)</label>
+            <input type="text" id="keyIp" class="input-field" placeholder="Kosongkan untuk IP saat ini">
+          </div>
+
           <button class="btn btn-success" onclick="generateApiKey()">
             <i class="fas fa-key"></i> Generate API Key Baru
           </button>
@@ -462,6 +467,10 @@
 
     // Simulasi database API Key dengan penyimpanan permanen
     let apiKeys = JSON.parse(localStorage.getItem('botAlipApiKeys')) || [];
+    if (!Array.isArray(apiKeys)) {
+      apiKeys = []; // Pastikan apiKeys selalu array
+      localStorage.setItem('botAlipApiKeys', JSON.stringify(apiKeys));
+    }
 
     // Dapatkan IP pengguna (simulasi)
     let userIp = "192.168.1." + Math.floor(Math.random() * 100 + 1);
@@ -582,21 +591,28 @@
       }
 
       const keyName = document.getElementById('newKeyName').value.trim();
+      let keyIp = document.getElementById('keyIp').value.trim();
 
       if (!keyName) {
         showNotification("❌ Harap beri nama untuk API Key!");
         return;
       }
 
+      // Jika IP kosong, gunakan IP pengguna saat ini
+      if (!keyIp) {
+        keyIp = userIp;
+      }
+
       // Generate random API Key
       const newKey = 'alip_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
-      // Simpan key dengan IP pengguna
+      // Simpan key dengan IP
       apiKeys.push({
         key: newKey,
         name: keyName,
-        ip: userIp,
-        createdAt: new Date().toLocaleDateString('id-ID')
+        ip: keyIp,
+        createdAt: new Date().toLocaleDateString('id-ID'),
+        createdBy: userIp
       });
 
       // Simpan ke localStorage (permanen)
@@ -607,6 +623,7 @@
 
       // Reset form
       document.getElementById('newKeyName').value = '';
+      document.getElementById('keyIp').value = '';
 
       showNotification("✅ API Key berhasil dibuat! Salin dan simpan di tempat aman.", false);
     }
@@ -620,22 +637,15 @@
         return;
       }
 
-      // Filter key berdasarkan IP admin
-      const adminApiKeys = apiKeys.filter(k => k.ip === userIp);
-
-      if (adminApiKeys.length === 0) {
-        apiKeysList.innerHTML = '<div class="api-key-item"><div class="key-info">Belum ada API Key</div></div>';
-        return;
-      }
-
-      adminApiKeys.forEach((keyData, index) => {
+      // Tampilkan semua API Key (tidak difilter berdasarkan IP)
+      apiKeys.forEach((keyData, index) => {
         const keyItem = document.createElement('div');
         keyItem.className = 'api-key-item';
 
         keyItem.innerHTML = `
           <div class="key-info">
             <div class="key-value">${keyData.key}</div>
-            <div class="key-meta">${keyData.name} | Dibuat: ${keyData.createdAt}</div>
+            <div class="key-meta">${keyData.name} | IP: ${keyData.ip} | Dibuat: ${keyData.createdAt}</div>
           </div>
           <div class="key-actions">
             <button class="key-btn" onclick="copyToClipboard('${keyData.key}')"><i class="fas fa-copy"></i></button>
@@ -663,12 +673,9 @@
         return;
       }
 
-      // Hanya hapus key milik IP admin
-      const adminApiKeys = apiKeys.filter(k => k.ip === userIp);
-      const keyToDelete = adminApiKeys[index];
-
-      if (keyToDelete) {
-        apiKeys = apiKeys.filter(k => k.key !== keyToDelete.key);
+      if (index >= 0 && index < apiKeys.length) {
+        // Hapus API Key berdasarkan index
+        apiKeys.splice(index, 1);
         localStorage.setItem('botAlipApiKeys', JSON.stringify(apiKeys));
         loadApiKeys();
         showNotification("✅ API Key berhasil dihapus!", false);
@@ -684,8 +691,8 @@
         return;
       }
 
-      // Cek apakah key valid dan sesuai dengan IP
-      const validKey = apiKeys.find(k => k.key === key && k.ip === userIp);
+      // Cek apakah key valid (tanpa memeriksa IP)
+      const validKey = apiKeys.find(k => k.key === key);
 
       if (validKey) {
         // Tampilkan progress bar
@@ -713,7 +720,7 @@
           }
         }, 100);
       } else {
-        showNotification("❌ API Key tidak valid atau tidak sesuai dengan IP Anda!");
+        showNotification("❌ API Key tidak valid!");
 
         // Shake animation for invalid input
         apiKeyInput.style.borderColor = 'var(--danger)';
