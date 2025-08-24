@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>UPDATE ALIP AI</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -22,6 +22,7 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -32,9 +33,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 15px;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
     .bg-animation {
@@ -44,6 +45,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
+      pointer-events: none;
     }
 
     .bg-animation span {
@@ -77,18 +79,23 @@
 
     .tabs {
       display: flex;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       background: rgba(25, 25, 35, 0.7);
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
     }
 
     .tab {
-      padding: 15px;
+      padding: 12px;
       flex: 1;
       text-align: center;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-size: 14px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .tab.active {
@@ -107,19 +114,19 @@
 
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .logo {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 15px;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 12px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
-      box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+      font-size: 24px;
+      box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
       animation: pulse 2s infinite;
       overflow: hidden;
       border: 3px solid var(--primary);
@@ -133,19 +140,19 @@
 
     @keyframes pulse {
       0% {
-        box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+        box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
       }
       50% {
-        box-shadow: 0 0 30px rgba(108, 92, 231, 0.8);
+        box-shadow: 0 0 25px rgba(108, 92, 231, 0.8);
       }
       100% {
-        box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+        box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
       }
     }
 
     .header h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: 20px;
+      margin-bottom: 8px;
       background: linear-gradient(to right, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -153,40 +160,42 @@
 
     .header p {
       color: var(--secondary);
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .box {
       background: rgba(25, 25, 35, 0.9);
-      border-radius: 12px;
-      padding: 25px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       backdrop-filter: blur(10px);
     }
 
     .input-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       text-align: left;
     }
 
     .input-group label {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       font-weight: 500;
       color: var(--secondary);
+      font-size: 14px;
     }
 
     .input-field {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border-radius: 8px;
       border: 2px solid rgba(108, 92, 231, 0.3);
       background: rgba(18, 18, 26, 0.7);
       color: var(--light);
       font-size: 16px;
       transition: all 0.3s ease;
+      -webkit-appearance: none;
     }
 
     .input-field:focus {
@@ -197,7 +206,7 @@
 
     .btn {
       width: 100%;
-      padding: 14px;
+      padding: 16px;
       border: none;
       border-radius: 8px;
       background: linear-gradient(to right, var(--primary), var(--accent));
@@ -210,9 +219,10 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+      min-height: 50px;
     }
 
-    .btn:hover {
+    .btn:hover, .btn:active {
       transform: translateY(-2px);
       box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
     }
@@ -227,7 +237,7 @@
 
     .download-link {
       display: block;
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 14px;
       border-radius: 8px;
       background: linear-gradient(to right, var(--success), #00d8a7);
@@ -238,18 +248,43 @@
       transition: all 0.3s ease;
       box-shadow: 0 5px 15px rgba(0, 184, 148, 0.4);
       animation: pulse 2s infinite;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
 
-    .download-link:hover {
+    .download-link:hover, .download-link:active {
       transform: translateY(-2px);
       box-shadow: 0 7px 20px rgba(0, 184, 148, 0.5);
     }
 
     .api-keys-list {
-      margin-top: 20px;
+      margin-top: 15px;
       background: rgba(18, 18, 26, 0.5);
       border-radius: 8px;
       overflow: hidden;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .api-keys-list::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .api-keys-list::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+    }
+
+    .api-keys-list::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    .api-keys-list::-webkit-scrollbar-thumb:hover {
+      background: var(--secondary);
     }
 
     .api-key-item {
@@ -266,56 +301,68 @@
 
     .key-info {
       flex: 1;
+      min-width: 0;
+      overflow: hidden;
     }
 
     .key-value {
       font-family: monospace;
-      font-size: 14px;
-      margin-bottom: 5px;
+      font-size: 13px;
+      margin-bottom: 4px;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .key-meta {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--secondary);
     }
 
     .key-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .key-btn {
-      padding: 6px 10px;
+      padding: 8px 10px;
       border: none;
       border-radius: 5px;
       background: var(--primary);
       color: white;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 13px;
+      min-width: 40px;
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .footer {
-      margin-top: 30px;
+      margin-top: 20px;
       text-align: center;
       color: var(--secondary);
-      font-size: 14px;
+      font-size: 12px;
     }
 
     .notification {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
+      top: 15px;
+      right: 15px;
+      left: 15px;
+      padding: 12px 16px;
       border-radius: 8px;
       background: var(--danger);
       color: white;
       box-shadow: 0 5px 15px rgba(214, 48, 49, 0.4);
-      transform: translateX(100%);
+      transform: translateY(-100px);
       transition: transform 0.3s ease;
       z-index: 1000;
       display: flex;
       align-items: center;
       gap: 10px;
+      word-break: break-word;
     }
 
     .notification.success {
@@ -323,7 +370,7 @@
     }
 
     .notification.show {
-      transform: translateX(0);
+      transform: translateY(0);
     }
 
     .admin-only {
@@ -360,6 +407,62 @@
     @keyframes slideIn {
       from { transform: translateY(20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Mobile-specific adjustments */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 5px;
+      }
+      
+      .header h1 {
+        font-size: 18px;
+      }
+      
+      .box {
+        padding: 15px;
+      }
+      
+      .input-field {
+        padding: 12px 14px;
+      }
+      
+      .btn, .download-link {
+        padding: 14px;
+        font-size: 15px;
+      }
+      
+      .api-key-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .key-actions {
+        align-self: flex-end;
+      }
+      
+      .tabs {
+        flex-direction: column;
+      }
+      
+      .tab {
+        padding: 10px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .header h1 {
+        font-size: 16px;
+      }
+      
+      .header p {
+        font-size: 12px;
+      }
+      
+      .input-field, .btn, .download-link {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
@@ -522,9 +625,9 @@
 
     // Create background animation
     function createBackgroundAnimation() {
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 15; i++) {
         const span = document.createElement('span');
-        const size = Math.random() * 30 + 10;
+        const size = Math.random() * 20 + 10;
         const posX = Math.random() * 100;
         const duration = Math.random() * 10 + 10;
         const delay = Math.random() * 5;
@@ -707,8 +810,8 @@
           if (progressValue >= 100) {
             clearInterval(interval);
             
-            // Download file langsung
-            simulateDownload();
+            // Download file langsung dari GitHub
+            downloadFromGitHub();
             
             // Sembunyikan progress bar setelah 1 detik
             setTimeout(() => {
@@ -730,25 +833,19 @@
       }
     }
 
-    // Simulasi download file
-    function simulateDownload() {
+    // Download file langsung dari GitHub tanpa membuka repo
+    function downloadFromGitHub() {
+      // URL langsung ke file ZIP di GitHub
+      const githubUrl = "https://github.com/alifalfrl/alipaiv4/archive/refs/heads/main.zip";
+      
       // Membuat elemen <a> sementara untuk trigger download
       const a = document.createElement('a');
-      
-      // Data dummy untuk file (dalam aplikasi nyata, ini akan berupa file ZIP binary)
-      const fileContent = 'Ini adalah konten file bot Alip yang akan diunduh.';
-      const blob = new Blob([fileContent], { type: 'application/zip' });
-      const url = URL.createObjectURL(blob);
-      
-      a.href = url;
-      a.download = 'bot_alip_update.zip';
+      a.href = githubUrl;
+      a.download = 'bot_alip_update.zip'; // Nama file saat didownload
       a.style.display = 'none';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      
-      // Bersihkan URL
-      setTimeout(() => URL.revokeObjectURL(url), 100);
     }
 
     // Allow Enter key to submit
