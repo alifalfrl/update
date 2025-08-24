@@ -848,12 +848,57 @@
       document.body.removeChild(a);
     }
 
-    // Allow Enter key to submit
-    apiKeyInput.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        cekApiKey();
-      }
-    });
+// Allow Enter key to submit
+apiKeyInput.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    cekApiKey();
+  }
+});
+
+// Link Channel Bot (simple biru + logo WA)
+const channelBox = document.createElement("div");
+channelBox.innerHTML = `
+  <div style="
+    margin-top:20px; 
+    text-align:center; 
+    padding:15px; 
+    border-radius:12px; 
+    background:#007BFF; 
+    color:white; 
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    animation: fadeIn 1s ease-in-out;
+  ">
+    <h3 style="margin:0; font-size:18px; font-weight:600;">INFO UPDT ALIP AI</h3>
+    <a href="https://whatsapp.com/channel/0029VbAnsaJFMqrTf5IwPJ3X" 
+       target="_blank" 
+       style="display:inline-flex; align-items:center; gap:8px;
+              margin-top:12px; padding:10px 20px; 
+              background:white; color:#007BFF; font-weight:600; 
+              text-decoration:none; border-radius:8px; 
+              transition:all 0.3s ease;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+           alt="WA" width="20" height="20">
+      Ikuti Channel
+    </a>
+  </div>
+
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    a:hover {
+      background: #007BFF !important;
+      color: white !important;
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,123,255,0.5);
+    }
+    a:hover img {
+      filter: brightness(0) invert(1);
+    }
+  </style>
+`;
+apiKeyInput.parentNode.appendChild(channelBox);
   </script>
 </body>
 </html>
